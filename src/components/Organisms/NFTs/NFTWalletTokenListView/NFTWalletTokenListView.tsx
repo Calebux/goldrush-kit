@@ -26,6 +26,7 @@ import { TokenAvatar } from "@/components/Atoms/TokenAvatar/TokenAvatar";
 export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
     chain_names,
     address,
+    onMint,
 }) => {
     const [maybeResult, setResult] =
         useState<Option<NftTokenContractBalanceItem[]>>(None);
@@ -53,9 +54,11 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                 );
 
                 setError({ error: false, error_message: "" });
-                return response.data.items.map((o) => {
-                    return { ...o, chain };
-                });
+                return response.data.items
+                    .filter((o) => o.contract_name === "Alchemist 4.0")
+                    .map((o) => {
+                        return { ...o, chain };
+                    });
             } catch (error) {
                 console.error(`Error fetching balances for ${chain}:`, error);
                 setError({
@@ -77,58 +80,9 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
 
     return (
         <div className="space-y-4 ">
-            <div className="flex flex-wrap place-content-between gap-2">
-                <AccountCard address={address} />
+            <div className="flex flex-wrap place-content-between gap-2"></div>
 
-                <div className="w-full rounded border p-2 md:max-w-[15rem] lg:max-w-[15rem]">
-                    <h2 className="text-base font-semibold  text-secondary ">
-                        Total Quote
-                    </h2>
-                    <div className="flex items-end gap-2">
-                        <span className="text-xl">
-                            {maybeResult.match({
-                                None: () => (
-                                    <Skeleton size={GRK_SIZES.MEDIUM} />
-                                ),
-                                Some: (result) => {
-                                    const s = sum(
-                                        result.map((x) => x.floor_price_quote)
-                                    );
-                                    return (
-                                        <span>
-                                            {prettifyCurrency(
-                                                s,
-                                                2,
-                                                "USD",
-                                                true
-                                            )}
-                                        </span>
-                                    );
-                                },
-                            })}
-                        </span>
-                        <div className="flex  gap-1  text-sm text-secondary ">
-                            <span className="flex">
-                                {" "}
-                                (
-                                {maybeResult.match({
-                                    None: () => (
-                                        <Skeleton
-                                            size={GRK_SIZES.EXTRA_EXTRA_SMALL}
-                                        />
-                                    ),
-                                    Some: (result) => {
-                                        return <span>{result.length}</span>;
-                                    },
-                                })}{" "}
-                            </span>
-                            NFTs)
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
+            <div className="mt-6 grid grid-cols-[1fr_1fr_1fr_1fr] gap-x-5 gap-y-6">
                 {maybeResult.match({
                     None: () =>
                         [1, 2, 3, 4, 5, 6, 7, 8].map((o, i) => {
@@ -163,87 +117,69 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                     "dark"
                                                 );
                                             return (
-                                                <Card className="w-[230px] rounded border">
-                                                    <CardContent className="relative rounded bg-slate-100">
-                                                        <img
-                                                            className={`block h-[10rem] w-full rounded-t ${
-                                                                it.external_data
-                                                                    ?.image_512
-                                                                    ? "object-cover"
-                                                                    : "p-2"
-                                                            }`}
-                                                            src={
-                                                                it.external_data
-                                                                    ?.image_512
-                                                                    ? it
-                                                                          .external_data
-                                                                          .image_512
-                                                                    : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
+                                                <div className="nft-card relative h-[420px] rounded-[5px] border-[0.5px] border-[#C4C4C4] p-[10px]">
+                                                    <img
+                                                        src={
+                                                            it.external_data
+                                                                ?.image_512
+                                                                ? it
+                                                                      .external_data
+                                                                      .image_512
+                                                                : "https://www.datocms-assets.com/86369/1685489960-nft.svg"
+                                                        }
+                                                        className="h-full w-full rounded-sm object-cover"
+                                                        alt=""
+                                                    />
+                                                    <div className="absolute bottom-[10px] left-[10px] right-[10px] rounded-e-sm bg-[#0D0E2E] !bg-opacity-90  text-white dark:bg-[#0D0D0D] dark:bg-opacity-90">
+                                                        <div className="p-2">
+                                                            <div className="flex items-center gap-x-2 text-[10px] font-extrabold leading-6 ">
+                                                                <TokenAvatar
+                                                                    is_chain_logo
+                                                                    size={
+                                                                        GRK_SIZES.EXTRA_SMALL
+                                                                    }
+                                                                    chain_color={
+                                                                        chainColor
+                                                                    }
+                                                                    token_url={
+                                                                        chain.logo_url
+                                                                    }
+                                                                />
+                                                                <h4>
+                                                                    Covalent
+                                                                </h4>
+                                                            </div>
+                                                            <div className="mt-1 flex items-center justify-between">
+                                                                <h2 className="text-base font-bold leading-6">
+                                                                    {
+                                                                        it
+                                                                            .external_data
+                                                                            .name
+                                                                    }
+                                                                </h2>
+                                                                <h4 className="flex items-center gap-x-[5px] text-xs font-normal leading-6">
+                                                                    +3
+                                                                </h4>
+                                                            </div>
+                                                            <div className="mt-2 flex items-center justify-between text-xs font-normal leading-6">
+                                                                <h2 className="leading-4">
+                                                                    Mint start
+                                                                </h2>
+                                                                <h4 className="">
+                                                                    26 Jan 2024
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            className="mint-btn hidden w-full cursor-pointer items-center justify-center bg-white py-[10px] text-center text-xs font-semibold leading-6 text-[#0D0D0D] dark:bg-[#0A0A23] dark:text-white"
+                                                            onClick={() =>
+                                                                onMint(it)
                                                             }
-                                                            onError={(e) => {
-                                                                e.currentTarget.classList.remove(
-                                                                    "object-cover"
-                                                                );
-                                                                e.currentTarget.classList.add(
-                                                                    "p-2"
-                                                                );
-                                                                e.currentTarget.src =
-                                                                    "https://www.datocms-assets.com/86369/1685489960-nft.svg";
-                                                            }}
-                                                        />
-                                                        <div
-                                                            className={`absolute -bottom-4 right-2 flex h-9 w-9 items-center justify-center rounded-[100%] p-1 ${
-                                                                !isDarkMode
-                                                                    ? "bg-white"
-                                                                    : "bg-black"
-                                                            } tokenAvatar`}
-                                                            style={{
-                                                                border: `2px solid `,
-                                                                borderColor: `${chainColor}`,
-                                                            }}
                                                         >
-                                                            <TokenAvatar
-                                                                is_chain_logo
-                                                                size={
-                                                                    GRK_SIZES.EXTRA_SMALL
-                                                                }
-                                                                chain_color={
-                                                                    chainColor
-                                                                }
-                                                                token_url={
-                                                                    chain.logo_url
-                                                                }
-                                                            />
-                                                        </div>
-                                                    </CardContent>
-                                                    <div className="p-4">
-                                                        <CardDescription>
-                                                            {" "}
-                                                            {
-                                                                items.contract_name
-                                                            }
-                                                        </CardDescription>
-                                                        <CardTitle className="truncate">
-                                                            #
-                                                            {it.token_id?.toString()}
-                                                        </CardTitle>
-                                                        <div className="mt-2">
-                                                            <small className="text-muted-foreground">
-                                                                Est. Value
-                                                            </small>
-                                                            <p>
-                                                                {" "}
-                                                                {items.pretty_floor_price_quote ? (
-                                                                    items.pretty_floor_price_quote
-                                                                ) : (
-                                                                    <span>
-                                                                        -
-                                                                    </span>
-                                                                )}
-                                                            </p>
-                                                        </div>
+                                                            Mint now
+                                                        </button>
                                                     </div>
-                                                </Card>
+                                                </div>
                                             );
                                         },
                                     });

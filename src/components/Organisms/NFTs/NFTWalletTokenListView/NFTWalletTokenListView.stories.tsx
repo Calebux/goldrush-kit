@@ -12,8 +12,8 @@ export default meta;
 
 export const NFTWalletTokenList: Story = {
     args: {
-        chain_names: ["eth-mainnet"],
-        address: "0x1ae705a28f1cca0363b5d709159220aa2fe551de",
+        chain_names: ["zora-mainnet"],
+        address: "0xadfb97961950b5894438c1c2f461695c023e2e14",
     },
 };
 

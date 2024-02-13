@@ -61,6 +61,16 @@
 
         --grk-radius: 0.5rem;
     }
+
+    .nft-card,
+    .nft-card > .mint-btn,
+    .nft-card > div {
+        @apply transition-all duration-300 ease-out;
+    }
+
+    .nft-card:hover .mint-btn {
+        @apply flex h-fit transition-all duration-300 ease-out;
+    }
 }
 
 @layer base {
@@ -152,4 +162,14 @@
 }
 .neo .neo-header {
     @apply bg-accent;
+}
+
+.nft-card,
+.nft-card > .mint-btn,
+.nft-card > div {
+    @apply transition-all duration-300 ease-out;
+}
+
+.nft-card:hover .mint-btn {
+    @apply flex h-fit;
 }

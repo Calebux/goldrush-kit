@@ -35,6 +35,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
                             withUncached: cache,
                         }
                     );
+                console.log(response);
                 setResult(new Some(response.data.items[0]));
             } catch (error) {
                 console.error(
