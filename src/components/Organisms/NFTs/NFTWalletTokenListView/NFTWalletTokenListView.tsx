@@ -4,6 +4,7 @@ import {
 } from "@/utils/constants/shared.constants";
 import { type Option, Some, None } from "@/utils/option";
 import type { ChainItem } from "@covalenthq/client-sdk";
+import covalentAvatar from "../../../../static/image 24.png";
 import {
     prettifyCurrency,
     type NftTokenContractBalanceItem,
@@ -133,17 +134,11 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                     <div className="absolute bottom-[10px] left-[10px] right-[10px] rounded-e-sm bg-[#0D0E2E] !bg-opacity-90  text-white dark:bg-[#0D0D0D] dark:bg-opacity-90">
                                                         <div className="p-2">
                                                             <div className="flex items-center gap-x-2 text-[10px] font-extrabold leading-6 ">
-                                                                <TokenAvatar
-                                                                    is_chain_logo
-                                                                    size={
-                                                                        GRK_SIZES.EXTRA_SMALL
+                                                                <img
+                                                                    src={
+                                                                        covalentAvatar
                                                                     }
-                                                                    chain_color={
-                                                                        chainColor
-                                                                    }
-                                                                    token_url={
-                                                                        chain.logo_url
-                                                                    }
+                                                                    alt=""
                                                                 />
                                                                 <h4>
                                                                     Covalent
