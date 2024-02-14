@@ -1,6 +1,6 @@
 {
     "_id": "goldrush-kit@0.0.1",
-    "name": "calebux@covalenthq/goldrush-kit",
+    "name": "@covalenthqcaleb/goldrush-kit",
     "version": "0.4.1",
     "types": "dist/index.d.ts",
     "exports": {
