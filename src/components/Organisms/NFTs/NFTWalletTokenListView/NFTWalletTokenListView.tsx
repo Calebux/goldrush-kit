@@ -71,18 +71,20 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
         });
 
         const results = await Promise.all(promises);
+        console.log(results[0][0].nft_data);
         setResult(new Some(results.flat()));
+
+        console.log(maybeResult);
     };
 
     useEffect(() => {
         handleAllChains();
         handleNftsToken();
+        // console.log(maybeResult.value.nft_data);
     }, [chain_names, address]);
 
     return (
         <div className="space-y-4 ">
-            <div className="flex flex-wrap place-content-between gap-2"></div>
-
             <div className="mt-6 grid grid-cols-[1fr_1fr_1fr_1fr] gap-x-5 gap-y-6">
                 {maybeResult.match({
                     None: () =>
@@ -166,7 +168,7 @@ export const NFTWalletTokenListView: React.FC<NFTWalletTokenListViewProps> = ({
                                                             </div>
                                                         </div>
                                                         <button
-                                                            className="mint-btn hidden w-full cursor-pointer items-center justify-center bg-white py-[10px] text-center text-xs font-semibold leading-6 text-[#0D0D0D] dark:bg-[#0A0A23] dark:text-white"
+                                                            className="lg:mint-btn w-full cursor-pointer items-center justify-center bg-white py-[10px] text-center text-xs font-semibold leading-6 text-[#0D0D0D] dark:bg-[#0A0A23] dark:text-white lg:hidden"
                                                             onClick={() =>
                                                                 onMint(it)
                                                             }

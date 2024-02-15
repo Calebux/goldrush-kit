@@ -76,7 +76,7 @@ export const NFTDetailView: React.FC<NFTDetailViewProps> = ({
             <div className="mt-4 flex gap-4">
                 {maybeResult.match({
                     None: () => (
-                        <div className="max-w-[30rem] rounded border ">
+                        <div className="max-w-[30rem] rounded border">
                             <div className="h-[30rem] w-[30rem] animate-pulse rounded bg-accent-foreground" />
 
                             <div className="mt-2 p-4">

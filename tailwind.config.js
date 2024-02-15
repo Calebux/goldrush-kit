@@ -12,14 +12,21 @@ module.exports = {
         "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        container: {
-            center: true,
-            padding: "2rem",
+        // container: {
+        //     center: true,
+        //     padding: "2rem",
+        //     screens: {
+        //         "2xl": "1400px",
+        //     },
+        // },
+        extend: {
             screens: {
+                sm: "640px", // Small screens, like phones
+                md: "768px", // Medium screens, like tablets
+                lg: "1024px", // Large screens, like laptops
+                xl: "1280px", // Extra large screens
                 "2xl": "1400px",
             },
-        },
-        extend: {
             colors: {
                 "text-color": colors.slate,
                 danger: "hsl(var(--grk-destructive))",
